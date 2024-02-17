@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float runSpeed = 10.0f;
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
-
-        
     }
 
     private void FixedUpdate()
@@ -31,18 +30,4 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isTimeFrozen)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                var enemy = collision.gameObject.GetComponent<Enemy>();
-                if (enemy != null)
-                {
-                    enemy.TakeDamage();
-                }
-            }
-        }
-    }
 }
