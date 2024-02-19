@@ -13,15 +13,14 @@ public class ShootProjectile : MonoBehaviour
     public float shootCooldown;
 
     private float _timer;
-    private bool _isFrozen; // if the object is frozen or not
-    private Enemy _enemy;
+    public bool _isFrozen; // if the object is frozen or not
+    private FreezeButton _button;
 
     // Start is called before the first frame update
     void Start()
     {
-        _enemy = GetComponent<Enemy>();
-        _isFrozen = _enemy.isFrozen;
-        _enemy.OnFrozenStateChanged += UpdateFrozenState;
+        _isFrozen = false;
+        FreezeButton.OnFrozenStateChanged += UpdateFrozenState;
     }
 
     // Update is called once per frame
