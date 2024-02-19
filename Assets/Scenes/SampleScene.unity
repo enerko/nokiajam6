@@ -293,9 +293,11 @@ GameObject:
   - component: {fileID: 1048404704}
   - component: {fileID: 1048404703}
   - component: {fileID: 1048404706}
+  - component: {fileID: 1048404707}
+  - component: {fileID: 1048404708}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -343,7 +345,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.99, y: 0.99}
   m_EdgeRadius: 0
 --- !u!212 &1048404704
 SpriteRenderer:
@@ -439,6 +441,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1048404707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048404701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35137e7cdcbb044196595ca31408068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  isFrozen: 0
+--- !u!114 &1048404708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048404701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccced215a4dd3bf4db7e4ddd031d6ed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 1702918447050813120, guid: 7027a2c6966032e42b5e18b31dcf41d9, type: 3}
+  shootDirection: {x: 1, y: 0}
+  projectileSpeed: 5
+  shootCooldown: 5
 --- !u!1 &1374694300
 GameObject:
   m_ObjectHideFlags: 0
@@ -40913,6 +40945,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1493747642}
   - component: {fileID: 1493747643}
+  - component: {fileID: 1493747644}
+  - component: {fileID: 1493747645}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -40987,6 +41021,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1493747644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493747641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93b21847678f7b42bf904a73bd8391f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &1493747645
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493747641}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!4 &1510354253 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 558921893373596113, guid: 6b099e3c48d723f40b0305663ff0e8f5, type: 3}
@@ -41058,19 +41149,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5156902945817503934, guid: 6b099e3c48d723f40b0305663ff0e8f5, type: 3}
       propertyPath: m_Size.x
-      value: 5
+      value: 4.9
       objectReference: {fileID: 0}
     - target: {fileID: 5156902945817503934, guid: 6b099e3c48d723f40b0305663ff0e8f5, type: 3}
       propertyPath: m_Size.y
-      value: 9
+      value: 4.9
       objectReference: {fileID: 0}
     - target: {fileID: 5156902945817503934, guid: 6b099e3c48d723f40b0305663ff0e8f5, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5156902945817503934, guid: 6b099e3c48d723f40b0305663ff0e8f5, type: 3}
       propertyPath: m_Offset.y
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7919701591087624033, guid: 6b099e3c48d723f40b0305663ff0e8f5, type: 3}
       propertyPath: m_SortingOrder
