@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _origPos;
 
     private int _direction;
+    private int _health;
 
 
     void Start()
@@ -95,6 +96,11 @@ public class PlayerController : MonoBehaviour
 
         sword.transform.position = _origPos;
         _attacking = false;
+    }
+
+    public void Death()
+    {
+        Destroy(gameObject);
     }
 
 }

@@ -5,41 +5,44 @@ using UnityEngine;
 
 public class ShootProjectile : MonoBehaviour
 {
+    // this should be attached to objects with enemy component
+
     public GameObject projectile; // projectile to shoot
     public Vector2 shootDirection; // direction to shoot the projectile at
     public float projectileSpeed;
     public float shootCooldown;
-    private float timer;
-    private bool isFrozen; // if the object is frozen or not
-    private Enemy enemy;
+
+    private float _timer;
+    private bool _isFrozen; // if the object is frozen or not
+    private Enemy _enemy;
 
     // Start is called before the first frame update
     void Start()
     {
-        enemy = GetComponent<Enemy>();
-        isFrozen = enemy.isFrozen;
-        enemy.OnFrozenStateChanged += UpdateFrozenState;
+        _enemy = GetComponent<Enemy>();
+        _isFrozen = _enemy.isFrozen;
+        _enemy.OnFrozenStateChanged += UpdateFrozenState;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isFrozen)
+        if (!_isFrozen)
         {
-            timer += Time.deltaTime;
+            _timer += Time.deltaTime;
 
             // check if cooldown is over
-            if (timer >= shootCooldown)
+            if (_timer >= shootCooldown)
             {
                 Shoot();
-                timer = 0f;
+                _timer = 0f;
             }
         }
     }
 
     void UpdateFrozenState(bool frozen)
     {
-        isFrozen = frozen;
+        _isFrozen = frozen;
     }
 
     void Shoot()
