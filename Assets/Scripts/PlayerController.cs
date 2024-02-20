@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10.0f;
     [SerializeField] GameObject sword;
-    [SerializeField] int attackRange = 3;
 
     private Rigidbody2D _rb;
 
@@ -90,16 +89,40 @@ public class PlayerController : MonoBehaviour
     IEnumerator Attack()
     {
         _attacking = true;
-        _origPos = Vector3Int.RoundToInt(sword.transform.position);
-        Quaternion _origRot = sword.transform.rotation;
+        _origPos = Vector3Int.RoundToInt(sword.transform.localPosition);
 
         // Move the sword to target position, then return it to original
-        sword.transform.position = _targetPos;
+        Vector3 targetPos;
+        Quaternion targetRot;
 
-        yield return new WaitForSeconds(0.3f);
+        // just hard code target pos because yeah
+        switch (_inputList.DefaultIfEmpty(KeyCode.None).Last())
+        {
+            case KeyCode.UpArrow:  // up
+                targetPos = new Vector3(3, 4, 1);
+                targetRot = Quaternion.AngleAxis(90, Vector3.forward);
+                break;
+            case KeyCode.RightArrow:  // right
+                targetPos = new Vector3(4, 2, 1);
+                targetRot = Quaternion.AngleAxis(0, Vector3.forward);
+                break;
+            case KeyCode.DownArrow:  // down
+                targetPos = new Vector3(3, -2, 1);
+                targetRot = Quaternion.AngleAxis(90, Vector3.forward);
+                break;
+            default:  // default to left
+                targetPos = new Vector3(-2, 2, 1);
+                targetRot = Quaternion.AngleAxis(0, Vector3.forward);
+                break;
+        }
 
-        sword.transform.position = _origPos;
-        sword.transform.rotation = _origRot;
+        sword.transform.localPosition = targetPos;
+        sword.transform.rotation = targetRot;
+
+        yield return new WaitForSeconds(0.5f);
+
+        sword.transform.localPosition = _origPos;
+        sword.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         _attacking = false;
     }
 
