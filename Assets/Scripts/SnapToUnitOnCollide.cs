@@ -15,7 +15,6 @@ public class SnapToUnitOnCollide : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D _collision)
     {
-        Debug.Log("colided");
         _rb.position = Vector2Int.RoundToInt(_rb.position);
     }
 }

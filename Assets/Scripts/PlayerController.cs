@@ -1,19 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10.0f;
     [SerializeField] GameObject sword;
-    [SerializeField] int attackRange = 4;
-    [SerializeField] float attackTime = 0.25f;
+    [SerializeField] int attackRange = 3;
 
     private Rigidbody2D _rb;
-
-    // private bool isTimeFrozen = true;
 
     private float _horizontal;
     private float _vertical;
@@ -21,31 +17,40 @@ public class PlayerController : MonoBehaviour
     private Vector3 _targetPos;
     private Vector3 _origPos;
 
-    private int _direction;
-    private int _health;
-
+    private List<KeyCode> _inputList;  // always push to this in chronological order
+    private KeyCode[] _arrowKeys = { KeyCode.UpArrow, KeyCode.RightArrow, KeyCode.DownArrow, KeyCode.LeftArrow };
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _direction = 1;
+        _inputList = new();
     }
 
     // get input
     void Update()
     {
-        _horizontal = Input.GetAxisRaw("Horizontal");
-        _vertical = Input.GetAxisRaw("Vertical");
+        // Update move direction if input key is pressed down
+        foreach (KeyCode k in _arrowKeys)
+        {
+            if (Input.GetKeyDown(k))
+            {
+                _inputList.Add(k);
+            }
+        }
 
-        _direction = _horizontal < 0 ? -1 : 1;
+        // When key input ends, remove it from the list
+        foreach (KeyCode k in _arrowKeys)
+        {
+            if (Input.GetKeyUp(k))
+            {
+                _inputList.Remove(k);
+            }
+        }
 
         // sword code
         if (Input.GetKeyDown(KeyCode.Space) && !_attacking)
         {
-            _attacking = true;
-            _origPos = sword.transform.position;
-            _targetPos = _origPos + _direction * attackRange * Vector3.right;
-            StartCoroutine(MoveSword());
+            StartCoroutine(Attack());
         }
     }
 
@@ -56,45 +61,45 @@ public class PlayerController : MonoBehaviour
         {  // if attacking, stop moving
             _rb.velocity = Vector2.zero;
             return;
-        }  
-        
-        // else
-        if (_horizontal != 0)
-        {
-            _rb.velocity = new Vector2(Mathf.Sign(_horizontal) * runSpeed, 0);
-        } else if (_vertical != 0)
-        {
-            _rb.velocity = new Vector2(0, Mathf.Sign(_vertical) * runSpeed);
-        } else 
-        {
-            _rb.velocity = Vector2.zero;
         }
+
+        // else
+        Vector2 direction;
+        switch (_inputList.DefaultIfEmpty(KeyCode.None).Last())
+        {
+            case KeyCode.UpArrow:  // up
+                direction = new Vector2(0, 1);
+                break;
+            case KeyCode.RightArrow:  // right
+                direction = new Vector2(1, 0);
+                break;
+            case KeyCode.DownArrow:  // down
+                direction = new Vector2(0, -1);
+                break;
+            case KeyCode.LeftArrow:  // left
+                direction = new Vector2(-1, 0);
+                break;
+            default:
+                direction = new Vector2(0, 0);
+                break;
+        }
+
+        _rb.velocity = direction * runSpeed;
     }
 
-    IEnumerator MoveSword()
+    IEnumerator Attack()
     {
-        // Move the sword to target position, then return it to original position
-        float elapsedTime = 0f;
+        _attacking = true;
+        _origPos = Vector3Int.RoundToInt(sword.transform.position);
+        Quaternion _origRot = sword.transform.rotation;
 
-        while (elapsedTime < attackTime)
-        {
-            sword.transform.position = Vector3.Lerp(_origPos, _targetPos, elapsedTime / attackTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
+        // Move the sword to target position, then return it to original
         sword.transform.position = _targetPos;
-        yield return new WaitForSeconds(0.5f);
 
-        elapsedTime = 0f;
-        while (elapsedTime < attackTime)
-        {
-            sword.transform.position = Vector3.Lerp(_targetPos, _origPos, elapsedTime / attackTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(0.3f);
 
         sword.transform.position = _origPos;
+        sword.transform.rotation = _origRot;
         _attacking = false;
     }
 
