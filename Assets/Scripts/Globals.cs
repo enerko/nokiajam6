@@ -76,6 +76,13 @@ public class Globals: MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    public static void LoadNextLevel()
+    {
+        int nextLevel = currLevel + 1;
+        LoadScene("Level " + nextLevel);
+        currLevel = nextLevel;
+    }
+
     // Play audio clip
     public static void PlayClip(AudioClip clip) {
         instance.GetComponent<AudioSource>().PlayOneShot(clip);
