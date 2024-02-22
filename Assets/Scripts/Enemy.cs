@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 
     public void Death()
     {
+        Globals.OnCharacterDeath("Enemy");
         // play death anim
         Destroy(gameObject);
     }

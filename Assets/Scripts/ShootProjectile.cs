@@ -19,6 +19,7 @@ public class ShootProjectile : MonoBehaviour
     {
         _isFrozen = false;
         FreezeButton.OnFrozenStateChanged += UpdateFrozenState;
+        _timer = shootCooldown / 2;  // make the first bullet spawn in quicker
     }
 
     // Update is called once per frame
