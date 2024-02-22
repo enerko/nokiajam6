@@ -23,7 +23,6 @@ public class FreezeButton : MonoBehaviour
         if (_isFrozen)
         {
             _timer += Time.deltaTime;
-            Debug.Log(_timer);
             // if freezeTime is over, then reset isFrozen and timer
             if (_timer >= freezeTime)
             {

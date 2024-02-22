@@ -8,7 +8,6 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("hi");
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             player.Death();
 
