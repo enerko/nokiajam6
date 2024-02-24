@@ -36,7 +36,7 @@ public class FreezeButton : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // if player presses the button then freeze enemies
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && !_isFrozen)
         {
             _isFrozen = true;
             OnFrozenStateChanged?.Invoke(_isFrozen);
