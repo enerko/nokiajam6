@@ -14,6 +14,7 @@ public class FreezeButton : MonoBehaviour
     public AudioClip freezeSound;
     public Sprite buttonPressed;
     public Sprite buttonReleased;
+    public GameObject arrow;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,10 @@ public class FreezeButton : MonoBehaviour
             OnFrozenStateChanged?.Invoke(_isFrozen);
             Globals.PlayClip(freezeSound);
             _spriteRenderer.sprite = buttonPressed;
+            if (arrow != null)
+            {
+                arrow.SetActive(false);
+            }
         }
     }
 }
