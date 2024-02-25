@@ -186,8 +186,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 1702918447050813120, guid: 7027a2c6966032e42b5e18b31dcf41d9, type: 3}
-  projectileSpeed: 5
+  projectileSpeed: 15
   shootCooldown: 2
+  offset: 0
   _isFrozen: 0
 --- !u!1 &5567974944097523890
 GameObject:

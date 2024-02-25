@@ -10,7 +10,6 @@ public class Flicker : MonoBehaviour
     private SpriteRenderer _renderer;
     private BoxCollider2D _collider;
     private float _timer = 0;
-    private bool _frozen = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,15 +19,11 @@ public class Flicker : MonoBehaviour
 
         _renderer.enabled = startOn;
         _collider.enabled = startOn;
-
-        FreezeButton.OnFrozenStateChanged += OnFreeze;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_frozen) return;
-
         _timer += Time.deltaTime;
 
         if (_timer >= interval) {
@@ -36,13 +31,5 @@ public class Flicker : MonoBehaviour
             _renderer.enabled = !_renderer.enabled;
             _collider.enabled = !_collider.enabled;
         }
-    }
-
-    // disable laser on freeze
-    void OnFreeze(bool val) {
-        _frozen = val;
-        _renderer.enabled = !val;
-        _collider.enabled = !val;
-        _timer = 0;
     }
 }

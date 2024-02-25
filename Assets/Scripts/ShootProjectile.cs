@@ -10,6 +10,7 @@ public class ShootProjectile : MonoBehaviour
     public GameObject projectile; // projectile to shoot
     public float projectileSpeed;
     public float shootCooldown;
+    public float offset;  // allows for alternating turret shots
 
     private float _timer;
     public bool _isFrozen; // if the object is frozen or not
@@ -17,9 +18,8 @@ public class ShootProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _isFrozen = false;
         FreezeButton.OnFrozenStateChanged += UpdateFrozenState;
-        _timer = shootCooldown / 2;  // make the first bullet spawn in quicker
+        _timer = shootCooldown / 2 + offset;  // make the first bullet spawn in quicker
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class ShootProjectile : MonoBehaviour
 
     void UpdateFrozenState(bool frozen)
     {
-        _isFrozen = frozen;
+        _isFrozen = !_isFrozen;
     }
 
     void Shoot()

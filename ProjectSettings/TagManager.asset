@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Projectile
+  - Friendly
+  - DestroyBullets
   layers:
   - Default
   - TransparentFX
