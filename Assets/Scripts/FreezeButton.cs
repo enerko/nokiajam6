@@ -6,16 +6,21 @@ public class FreezeButton : MonoBehaviour
 {
     private bool _isFrozen;
     private float _timer;
+    private SpriteRenderer _spriteRenderer;
 
     public float freezeTime;
     public delegate void FrozenStateChanged(bool frozen);
     public static event FrozenStateChanged OnFrozenStateChanged;
     public AudioClip freezeSound;
+    public Sprite buttonPressed;
+    public Sprite buttonReleased;
 
     // Start is called before the first frame update
     void Start()
     {
         _isFrozen = false;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.sprite = buttonReleased;
     }
 
     // Update is called once per frame
@@ -30,6 +35,7 @@ public class FreezeButton : MonoBehaviour
                 _isFrozen = false;
                 OnFrozenStateChanged?.Invoke(_isFrozen);
                 _timer = 0;
+                _spriteRenderer.sprite = buttonReleased;
             }
         }
     }
@@ -42,6 +48,7 @@ public class FreezeButton : MonoBehaviour
             _isFrozen = true;
             OnFrozenStateChanged?.Invoke(_isFrozen);
             Globals.PlayClip(freezeSound);
+            _spriteRenderer.sprite = buttonPressed;
         }
     }
 }
