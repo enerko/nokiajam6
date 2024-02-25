@@ -10,6 +10,7 @@ public class FreezeButton : MonoBehaviour
     public float freezeTime;
     public delegate void FrozenStateChanged(bool frozen);
     public static event FrozenStateChanged OnFrozenStateChanged;
+    public AudioClip freezeSound;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class FreezeButton : MonoBehaviour
         {
             _isFrozen = true;
             OnFrozenStateChanged?.Invoke(_isFrozen);
+            Globals.PlayClip(freezeSound);
         }
     }
 }

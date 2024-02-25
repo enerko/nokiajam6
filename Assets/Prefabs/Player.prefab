@@ -246,6 +246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 5
   sword: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: fdc178ae0d9c6b4438b4f0989befa3ce, type: 3}
+  attackSound: {fileID: 8300000, guid: a57da01c329da304280c9a6a292d49af, type: 3}
 --- !u!50 &3674045339412386140
 Rigidbody2D:
   serializedVersion: 4

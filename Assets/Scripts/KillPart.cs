@@ -11,7 +11,8 @@ public class KillPart : MonoBehaviour
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             player.Death();
-
+            Globals.RestartCurrentLevel(1);
+            Destroy(gameObject);
         }
 
         if (collision.gameObject.tag != "Enemy")

@@ -4,23 +4,15 @@ using UnityEngine;
 
 public class SceneTransition : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] AudioClip winSound;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            Globals.LoadNextLevel();
+            Globals.PlayClip(winSound);
+            Destroy(collision.gameObject);
+            Globals.LoadNextLevel(2);
         }
     }
 }

@@ -8,12 +8,10 @@ public class Globals: MonoBehaviour
 {
     public static Globals instance;
     public static int currentEnemies = 0;  // gets initialized on load
-    private static int numLevels = 1;
+    private static int numLevels = 4;
     private static int currLevel = 1;
 
     private static bool isLoadingScene = false;  // sometimes it loads after a delay, this corresponds to that
-
-    public AudioClip winSound;
 
     private void Awake()
     {
@@ -25,29 +23,6 @@ public class Globals: MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-    }
-
-    // player or turret death...
-    public static void OnCharacterDeath(string tag)
-    {
-        // if enemy is destroyed...
-        if (tag == "Enemy")
-        {
-            currentEnemies--;
-
-            if (currentEnemies == 0) {
-                // currLevel should go from 1 to numLevels
-                currLevel = currLevel % numLevels + 1;
-                PlayClip(instance.winSound);
-                RestartCurrentLevel(2);
-            }
-        }
-
-        // If you shoot yourself...
-        if (tag == "Player")
-        {
-            RestartCurrentLevel(1);
         }
     }
 
@@ -76,15 +51,16 @@ public class Globals: MonoBehaviour
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
-    public static void LoadNextLevel()
+    public static void LoadNextLevel(float delay)
     {
         int nextLevel = currLevel + 1;
-        LoadScene("Level " + nextLevel);
+        instance.StartCoroutine(LoadSceneAsync("Level " + nextLevel, delay));
         currLevel = nextLevel;
     }
 
     // Play audio clip
     public static void PlayClip(AudioClip clip) {
-        instance.GetComponent<AudioSource>().PlayOneShot(clip);
+        instance.GetComponent<AudioSource>().clip = clip;
+        instance.GetComponent<AudioSource>().Play();
     }
 }

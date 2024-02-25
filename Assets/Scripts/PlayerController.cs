@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10.0f;
     [SerializeField] GameObject sword;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip attackSound;
 
     private Rigidbody2D _rb;
 
@@ -88,6 +90,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Attack()
     {
+        Globals.PlayClip(attackSound);
         _attacking = true;
         _origPos = Vector3Int.RoundToInt(sword.transform.localPosition);
 
@@ -128,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
-        Globals.OnCharacterDeath("Player");
+        Globals.PlayClip(deathSound);
         Destroy(gameObject);
     }
 
